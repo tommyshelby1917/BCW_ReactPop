@@ -1,24 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+
+import { useEffect, useRef, useState } from 'react';
+import { logout } from './components/auth/service';
+
+import LoginPage from './components/auth/LoginPage/LoginPage';
+
+import { AuthContextProvider } from './components/auth/context';
+
+function App({ isInitiallyLogged }) {
+  const [isLogged, setIsLogged] = useState(isInitiallyLogged);
+
+  const handleLogin = () => {
+    setIsLogged(true);
+  };
+
+  const handleLogout = () => {
+    logout().then(() => setIsLogged(false));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AuthContextProvider value={{ isLogged, handleLogout, handleLogin }}>
+        <div className="App">
+          <Switch>
+            <Route path="/login">
+              {(routeProps) => <LoginPage {...routeProps} a={5} />}
+            </Route>
+          </Switch>
+        </div>
+      </AuthContextProvider>
+    </Router>
   );
 }
 
