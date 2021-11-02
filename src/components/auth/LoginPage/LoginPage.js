@@ -9,7 +9,11 @@ import { AuthContextConsumer } from '../context';
 import './LoginPage.css';
 
 function LoginPage({ onLogin, history, location }) {
-  const [value, setValue] = useState({ email: '', password: '' });
+  const [value, setValue] = useState({
+    email: '',
+    password: '',
+    remember: '',
+  });
   const [error, setError] = useState(null);
 
   const deleteError = () => setError(null);
@@ -17,7 +21,10 @@ function LoginPage({ onLogin, history, location }) {
   const handleChange = (event) => {
     setValue((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value,
+      [event.target.name]:
+        event.target.type === 'checkbox'
+          ? event.target.checked
+          : event.target.value,
     }));
   };
 
@@ -54,6 +61,14 @@ function LoginPage({ onLogin, history, location }) {
           label="password"
           className="loginForm-field"
           value={value.password}
+          onChange={handleChange}
+        ></FormField>
+        <FormField
+          type="checkbox"
+          name="remember"
+          label="Remember me"
+          className="loginForm-field"
+          value={value.remember}
           onChange={handleChange}
         ></FormField>
         <Button className="loginForm-submit" type="submit">

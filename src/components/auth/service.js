@@ -5,11 +5,13 @@ import client, {
 
 import storage from '../../utils/storage';
 
-export const login = async (credentials) => {
-  return client.post('api/auth/login', credentials).then(({ accesToken }) => {
-    setAuthorizationHeader(accesToken);
-    storage.set('auth', accesToken);
-  });
+export const login = async (data) => {
+  const credentials = { email: data.email, password: data.password };
+  const token = await client.post('api/auth/login', credentials);
+  setAuthorizationHeader(token);
+  if (data.remember) {
+    storage.set('auth', token);
+  }
 };
 
 export const logout = () =>
