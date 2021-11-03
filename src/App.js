@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 import { logout } from './components/auth/service';
 
 import LoginPage from './components/auth/LoginPage/LoginPage';
+import AdvertsPage from './components/adverts/AdvertsPage/AdvertsPage';
 
 import { AuthContextProvider } from './components/auth/context';
 
@@ -31,7 +32,13 @@ function App({ isInitiallyLogged }) {
         <div className="App">
           <Switch>
             <Route path="/login">
-              {(routeProps) => <LoginPage {...routeProps} a={5} />}
+              {(routeProps) => <LoginPage {...routeProps} />}
+            </Route>
+            <Route path="/adverts">
+              <AdvertsPage />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/adverts" />
             </Route>
           </Switch>
         </div>

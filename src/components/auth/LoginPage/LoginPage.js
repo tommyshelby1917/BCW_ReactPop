@@ -12,7 +12,7 @@ function LoginPage({ onLogin, history, location }) {
   const [value, setValue] = useState({
     email: '',
     password: '',
-    remember: '',
+    remember: false,
   });
   const [error, setError] = useState(null);
 
