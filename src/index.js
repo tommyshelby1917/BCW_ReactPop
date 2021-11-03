@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { setAuthorizationHeader } from './api/client';
+import storage from './utils/storage';
+
+const accesToken = storage.get('auth');
+setAuthorizationHeader(accesToken);
 
 ReactDOM.render(
   <React.StrictMode>
