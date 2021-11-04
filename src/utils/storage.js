@@ -1,6 +1,7 @@
 const storage = {
   get(key) {
-    const value = localStorage.getItem(key) || sessionStorage.getItems(key);
+    const value = localStorage.getItem(key) || sessionStorage.getItem(key);
+    console.log(value);
     if (!value) {
       return null;
     }

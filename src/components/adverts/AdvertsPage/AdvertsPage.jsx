@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getLastestAdverts } from '../service';
@@ -30,9 +30,24 @@ function AdvertsPage() {
         {adverts.length ? (
           <div className="advertsList-main">
             {adverts.map(({ id, ...advert }) => (
-              <li key={id}>
-                <Link to={`/adverts/${id}`}>{advert.name}</Link>
-              </li>
+              <div className="advertList-item">
+                <Link to={`/adverts/${id}`}>
+                  <Fragment>
+                    <div className="advertTitleContainer">
+                      <h2>{advert.name}</h2>
+                    </div>
+                    <div className="advertSaleContainer">
+                      <h2>{advert.sale ? 'I want sell!' : 'I want buy!'}</h2>
+                    </div>
+                    <div className="advertPriceContainer">
+                      <h2>{advert.price}</h2>
+                    </div>
+                    <div className="advertTagsContainer">
+                      <h2>{advert.tags || 'NO TAGS'}</h2>
+                    </div>
+                  </Fragment>
+                </Link>
+              </div>
             ))}
           </div>
         ) : (
