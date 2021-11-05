@@ -23,11 +23,16 @@ function SelectTags({ click }) {
 
   return (
     <div>
+      {/* <select name="tags" multiple> */}
       {collectedTags.map((e) => (
-        <button key={e.toString()} onClick={click}>
+        <button type="button" key={e.toString()} onClick={click}>
           {e}
         </button>
+        // <option key={e.toString()} value={e} onClick={}>
+        //   {e}
+        // </option>
       ))}
+      {/* </select> */}
     </div>
   );
 }

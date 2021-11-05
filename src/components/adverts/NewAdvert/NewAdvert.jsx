@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Layout from '../../layout/Layout';
 import Button from '../../common/Button/Button';
 import FormField from '../../common/FormField/FormField';
-import SelectField from '../../common/FormField/SelectField';
 import SelectTags from '../NewAdvert/SelectTags';
+import { newPostApi } from '../service';
+import { Redirect, useHistory } from 'react-router';
 
 function NewAdvert() {
+  const history = useHistory();
+  const formData = new FormData();
+
   const [value, setValue] = useState({
     name: '',
-    sell: false,
+    sale: false,
     tags: [],
     price: 0,
     photo: null,
@@ -35,10 +39,20 @@ function NewAdvert() {
     }
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const createdPost = await 
-  }
+    for (const [key, valor] of Object.entries(value)) {
+      formData.append(key, valor);
+    }
+    try {
+      const createdPost = await newPostApi(formData);
+    } catch (error) {
+      console.log(error);
+      if (error.status === 401) {
+        return history.push('/login');
+      }
+    }
+  };
 
   return (
     <Layout title="Create advert!">
@@ -54,10 +68,10 @@ function NewAdvert() {
           ></FormField>
           <FormField
             type="checkbox"
-            name="sell"
-            label="sell"
+            name="sale"
+            label="sale"
             className="newAdvert-field"
-            value={value.sell}
+            value={value.sale}
             onChange={handleChange}
           ></FormField>
           <SelectTags click={handleTags} />
@@ -70,7 +84,7 @@ function NewAdvert() {
             onChange={handleChange}
           ></FormField>
           <FormField type="file" name="photo" label="photo" />
-          <Button>Create advert!</Button>
+          <Button type="submit">Create advert!</Button>
         </form>
       </div>
     </Layout>
