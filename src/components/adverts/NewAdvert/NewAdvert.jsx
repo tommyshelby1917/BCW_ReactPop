@@ -16,11 +16,10 @@ function NewAdvert() {
     sale: false,
     tags: [],
     price: 0,
-    photo: null,
+    photo: '',
   });
 
   const handleChange = (event) => {
-    console.log(value.photo);
     setValue((prevState) => ({
       ...prevState,
       [event.target.name]:
@@ -45,11 +44,12 @@ function NewAdvert() {
       formData.append(key, valor);
     }
 
-    if (!value.photo) {
-      formData.delete('photo');
-    }
+    // if (!value.photo) {
+    //   formData.delete('photo');
+    // }
 
     try {
+      console.log(value);
       const createdPost = await newPostApi(formData);
     } catch (error) {
       console.log(error);
@@ -88,7 +88,12 @@ function NewAdvert() {
             value={value.price}
             onChange={handleChange}
           ></FormField>
-          <FormField type="file" name="photo" label="photo" />
+          <FormField
+            type="file"
+            name="photo"
+            label="photo"
+            onChange={handleChange}
+          />
           <Button type="submit">Create advert!</Button>
         </form>
       </div>
