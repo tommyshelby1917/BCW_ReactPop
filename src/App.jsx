@@ -13,6 +13,7 @@ import { logout } from './components/auth/service';
 import LoginPage from './components/auth/LoginPage/LoginPage';
 import AdvertsPage from './components/adverts/AdvertsPage/AdvertsPage';
 import AdvertSingle from './components/adverts/AdvertSingle/AdvertSingle';
+import NewAdvert from './components/adverts/NewAdvert/NewAdvert';
 
 import { AuthContextProvider } from './components/auth/context';
 
@@ -34,6 +35,9 @@ function App({ isInitiallyLogged }) {
           <Switch>
             <Route path="/login">
               {(routeProps) => <LoginPage {...routeProps} />}
+            </Route>
+            <Route path="/adverts/new">
+              <NewAdvert />
             </Route>
             <Route path="/adverts/:advertId">
               {(routeProps) => <AdvertSingle {...routeProps} />}

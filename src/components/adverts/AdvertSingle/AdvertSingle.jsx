@@ -52,7 +52,7 @@ function AdvertSingle() {
               <h2>{advert.price}</h2>
             </div>
             <div className="advertTagsContainer">
-              <h2>{advert.tags || 'There are no tags'}</h2>
+              <h2>{advert.tags || 'NO TAGS'}</h2>
             </div>
             <div className="advertImageContainer">
               <img

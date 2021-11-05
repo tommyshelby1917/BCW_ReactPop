@@ -9,3 +9,8 @@ export const getSingleAdvert = (id) => {
   const url = `/api/v1/adverts/${id}`;
   return client.get(url);
 };
+
+export const requestTagsToAPI = () => {
+  const url = '/api/v1/adverts/tags';
+  return client.get(url);
+};
