@@ -20,7 +20,7 @@ function NewAdvert() {
   });
 
   const handleChange = (event) => {
-    console.log(value);
+    console.log(value.photo);
     setValue((prevState) => ({
       ...prevState,
       [event.target.name]:
@@ -44,6 +44,11 @@ function NewAdvert() {
     for (const [key, valor] of Object.entries(value)) {
       formData.append(key, valor);
     }
+
+    if (!value.photo) {
+      formData.delete('photo');
+    }
+
     try {
       const createdPost = await newPostApi(formData);
     } catch (error) {
