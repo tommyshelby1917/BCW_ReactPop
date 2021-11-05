@@ -16,7 +16,6 @@ function NewAdvert() {
     sale: false,
     tags: [],
     price: 0,
-    photo: '',
   });
 
   const handleChange = (event) => {
@@ -38,15 +37,15 @@ function NewAdvert() {
     }
   };
 
+  const handlePhoto = (event) => {
+    formData.set('photo', event.target.files[0]);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     for (const [key, valor] of Object.entries(value)) {
       formData.append(key, valor);
     }
-
-    // if (!value.photo) {
-    //   formData.delete('photo');
-    // }
 
     try {
       console.log(value);
@@ -92,7 +91,7 @@ function NewAdvert() {
             type="file"
             name="photo"
             label="photo"
-            onChange={handleChange}
+            onChange={handlePhoto}
           />
           <Button type="submit">Create advert!</Button>
         </form>
