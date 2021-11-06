@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import classNames from 'classnames';
 import { Redirect, useLocation, useParams, useHistory } from 'react-router';
+
 import Layout from '../../layout/Layout';
 import Button from '../../common/Button/Button';
+import ConfirmAction from '../../common/ConfirmAction/ConfirmAction';
 
 import { getSingleAdvert, deletePostApi } from '../service';
 
@@ -24,7 +26,7 @@ const useGetData = (getData) => {
       });
 
     return () => {};
-  }, [getData]);
+  }, [getData, history]);
 
   return data;
 };
@@ -42,16 +44,23 @@ function AdvertSingle() {
   const history = useHistory();
   const { advertId } = useParams();
   const advert = useAdvert(advertId);
-  const [showConfirm, setShowConfirm] = useState(false);
   const backend = process.env.REACT_APP_API_BASE_URL;
+
+  const [displayConfirmation, setDisplayConfirmation] = useState(null);
+  const [deleteMessage, setDeleteMessage] = useState(null);
+
+  const showDisplayConfirmation = () => {
+    setDeleteMessage('Are you sure do you want to delete this post?');
+    setDisplayConfirmation(true);
+  };
+
+  const hideConfirmationModal = () => {
+    setDisplayConfirmation(false);
+  };
 
   const deletePost = async function () {
     await deletePostApi(advertId);
     return history.push('/adverts');
-  };
-
-  const closePopUp = () => {
-    setShowConfirm(false);
   };
 
   return (
@@ -69,7 +78,9 @@ function AdvertSingle() {
               <h2>{advert.price}</h2>
             </div>
             <div className="advertTagsContainer">
-              <h2>{advert.tags || 'NO TAGS'}</h2>
+              <h2>
+                {advert.tags ? advert.tags.map((e) => <p>{e}</p>) : 'NO TAGS'}
+              </h2>
             </div>
             <div className="advertImageContainer">
               <img
@@ -79,17 +90,15 @@ function AdvertSingle() {
               />
             </div>
             <div className="deleteButton-container">
-              {!showConfirm && (
-                <Button onClick={() => setShowConfirm(true)}>
-                  Delete post
-                </Button>
-              )}
-              {showConfirm && (
-                <Fragment>
-                  <h2>Are you sure do you want to delete the post?</h2>
-                  <Button onClick={deletePost}>Yes, Im sure!</Button>
-                  <Button onClick={() => setShowConfirm(false)}>No</Button>
-                </Fragment>
+              <Button onClick={showDisplayConfirmation}>
+                Delete this post!
+              </Button>
+              {displayConfirmation && (
+                <ConfirmAction
+                  message={deleteMessage}
+                  action={deletePost}
+                  hide={hideConfirmationModal}
+                />
               )}
             </div>
           </Fragment>

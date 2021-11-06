@@ -5,9 +5,12 @@ import styled from 'styled-components';
 const GetTags = () => {
   const [data, setData] = useState([]);
 
-  useEffect(async () => {
-    const tags = await requestTagsToAPI();
-    setData(tags);
+  useEffect(() => {
+    async function fetchData() {
+      const tags = await requestTagsToAPI();
+      setData(tags);
+    }
+    fetchData();
   }, []);
 
   return data;
