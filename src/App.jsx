@@ -14,8 +14,10 @@ import LoginPage from './components/auth/LoginPage/LoginPage';
 import AdvertsPage from './components/adverts/AdvertsPage/AdvertsPage';
 import AdvertSingle from './components/adverts/AdvertSingle/AdvertSingle';
 import NewAdvert from './components/adverts/NewAdvert/NewAdvert';
+import Page404 from './components/page404/Page404';
 
 import { AuthContextProvider } from './components/auth/context';
+import PrivateRoute from './components/auth/PrivateRoute';
 
 function App({ isInitiallyLogged }) {
   const [isLogged, setIsLogged] = useState(isInitiallyLogged);
@@ -36,17 +38,23 @@ function App({ isInitiallyLogged }) {
             <Route path="/login">
               {(routeProps) => <LoginPage {...routeProps} />}
             </Route>
-            <Route path="/adverts/new">
+            <PrivateRoute path="/adverts/new">
               <NewAdvert />
-            </Route>
-            <Route path="/adverts/:advertId">
+            </PrivateRoute>
+            <PrivateRoute path="/adverts/:advertId">
               {(routeProps) => <AdvertSingle {...routeProps} />}
-            </Route>
-            <Route path="/adverts">
+            </PrivateRoute>
+            <PrivateRoute path="/adverts">
               <AdvertsPage />
-            </Route>
+            </PrivateRoute>
             <Route exact path="/">
               <Redirect to="/adverts" />
+            </Route>
+            <PrivateRoute path="/404">
+              <Page404 />
+            </PrivateRoute>
+            <Route>
+              <Redirect to="/404" />
             </Route>
           </Switch>
         </div>

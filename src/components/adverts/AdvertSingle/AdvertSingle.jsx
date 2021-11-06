@@ -1,23 +1,29 @@
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import classNames from 'classnames';
-import { Redirect, useLocation, useParams } from 'react-router';
+import { Redirect, useLocation, useParams, useHistory } from 'react-router';
 import Layout from '../../layout/Layout';
+import Button from '../../common/Button/Button';
 
-import { getSingleAdvert } from '../service';
+import { getSingleAdvert, deletePostApi } from '../service';
 
 import './AdvertSingle.css';
 
 import noImage from '../../../public/images/noimage.jpeg';
 
 const useGetData = (getData) => {
+  const history = useHistory();
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    getData().then((data) => setData(data));
+    getData()
+      .then((data) => setData(data))
+      .catch((error) => {
+        if (error.status === 404) {
+          return history.push('/404');
+        }
+      });
 
-    return () => {
-      console.log(getData);
-    };
+    return () => {};
   }, [getData]);
 
   return data;
@@ -33,9 +39,20 @@ const useAdvert = (advertId) => {
 };
 
 function AdvertSingle() {
+  const history = useHistory();
   const { advertId } = useParams();
   const advert = useAdvert(advertId);
+  const [showConfirm, setShowConfirm] = useState(false);
   const backend = process.env.REACT_APP_API_BASE_URL;
+
+  const deletePost = async function () {
+    await deletePostApi(advertId);
+    return history.push('/adverts');
+  };
+
+  const closePopUp = () => {
+    setShowConfirm(false);
+  };
 
   return (
     <Layout title="Single Advert">
@@ -60,6 +77,20 @@ function AdvertSingle() {
                 alt=""
                 width="300"
               />
+            </div>
+            <div className="deleteButton-container">
+              {!showConfirm && (
+                <Button onClick={() => setShowConfirm(true)}>
+                  Delete post
+                </Button>
+              )}
+              {showConfirm && (
+                <Fragment>
+                  <h2>Are you sure do you want to delete the post?</h2>
+                  <Button onClick={deletePost}>Yes, Im sure!</Button>
+                  <Button onClick={() => setShowConfirm(false)}>No</Button>
+                </Fragment>
+              )}
             </div>
           </Fragment>
         )}

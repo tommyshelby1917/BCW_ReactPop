@@ -6,8 +6,13 @@ export const getLastestAdverts = () => {
 };
 
 export const getSingleAdvert = (id) => {
-  const url = `/api/v1/adverts/${id}`;
+  const url = `/api/v1/adverts/${id}?_expand=user`;
   return client.get(url);
+};
+
+export const deletePostApi = (id) => {
+  const url = `/api/v1/adverts/${id}`;
+  return client.delete(url, id);
 };
 
 export const requestTagsToAPI = () => {
@@ -15,7 +20,7 @@ export const requestTagsToAPI = () => {
   return client.get(url);
 };
 
-export const newPostApi = (data, config) => {
+export const newPostApi = (data) => {
   const url = '/api/v1/adverts';
-  return client.post(url, data, config);
+  return client.post(url, data);
 };

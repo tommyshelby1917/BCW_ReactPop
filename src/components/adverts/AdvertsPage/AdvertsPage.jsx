@@ -10,7 +10,7 @@ import './AdvertsPage.css';
 const EmptyList = () => (
   <div className="emptylistContainer">
     <p>Create your first advert!</p>
-    <Button as={Link} to="/advert/new">
+    <Button as={Link} to="/adverts/new">
       New Advert
     </Button>
   </div>
@@ -30,7 +30,7 @@ function AdvertsPage() {
         {adverts.length ? (
           <div className="advertsList-main">
             {adverts.map(({ id, ...advert }) => (
-              <div className="advertList-item">
+              <div key={id} className="advertList-item">
                 <Link to={`/adverts/${id}`}>
                   <Fragment>
                     <div className="advertTitleContainer">
