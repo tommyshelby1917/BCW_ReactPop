@@ -20,6 +20,7 @@ const EmptyList = () => (
 
 function AdvertsPage() {
   const [adverts, setAdverts] = useState([]);
+  const [showSearch, setShowSearch] = useState(false);
 
   // Esto es el ciclo de vida del componente. Cuando se arranca hacemos lo siguiente.
   useEffect(() => {
@@ -27,32 +28,44 @@ function AdvertsPage() {
   }, []); // Como hay una array vacia, solo se arranca una vez
 
   return (
-    <Layout title="Lastest adverts">
+    <Layout title="Adverts">
       <div className="advertsPage">
         {adverts.length ? (
-          <div className="advertsList-main">
-            <FilterAdvert />
-            {/* {adverts.map(({ id, ...advert }) => (
-              <div key={id} className="advertList-item">
-                <Link to={`/adverts/${id}`}>
-                  <Fragment>
-                    <div className="advertTitleContainer">
-                      <h2>{advert.name}</h2>
-                    </div>
-                    <div className="advertSaleContainer">
-                      <h2>{advert.sale ? 'I want sell!' : 'I want buy!'}</h2>
-                    </div>
-                    <div className="advertPriceContainer">
-                      <h2>{advert.price}</h2>
-                    </div>
-                    <div className="advertTagsContainer">
-                      <h2>{advert.tags || 'NO TAGS'}</h2>
-                    </div>
-                  </Fragment>
-                </Link>
-              </div>
-            ))} */}
-          </div>
+          <>
+            <Button onClick={() => setShowSearch(!showSearch)}>
+              {!showSearch ? 'Search 🔎' : 'See all adverts'}
+            </Button>
+            <div className="advertsList-main">
+              {showSearch ? (
+                <FilterAdvert />
+              ) : (
+                adverts.map(({ id, ...advert }) => (
+                  <div key={id} className="advertList-item">
+                    <Link className="linktoadvert" to={`/adverts/${id}`}>
+                      <Fragment>
+                        <div className="advertSaleContainer">
+                          <h2>
+                            {advert.sale ? 'I want sell!' : 'I want buy!'}
+                          </h2>
+                        </div>
+                        <div className="advertTitleContainer">
+                          <h2>{advert.name}</h2>
+                        </div>
+                        <div className="advertPriceContainer">
+                          <h2>{advert.price}€</h2>
+                        </div>
+                        <div className="advertTagsContainer">
+                          {advert.tags.map((e) => <h2 key={e}>{e}</h2>) || (
+                            <p>This post doesn't have any tags</p>
+                          )}
+                        </div>
+                      </Fragment>
+                    </Link>
+                  </div>
+                ))
+              )}
+            </div>
+          </>
         ) : (
           <EmptyList />
         )}

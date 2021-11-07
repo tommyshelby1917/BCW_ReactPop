@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
 import classNames from 'classnames';
 import Layout from '../../layout/Layout';
-import Button from '../../common/Button/Button';
-import FormField from '../../common/FormField/FormField';
-import SelectTags from '../NewAdvert/SelectTags';
 import { newPostApi } from '../service';
 import { Redirect, useHistory } from 'react-router';
 import ErrorMessage from '../../common/ErrorMessage/ErrorMessage';
+
+import Button from '../../common/Button/Button';
+import FormField from '../../common/FormField/FormField';
+import SelectTags from '../../common/SelectTags/SelectTags';
+
+import './NewAdvert.css';
 
 function NewAdvert() {
   const history = useHistory();
@@ -33,12 +36,17 @@ function NewAdvert() {
   };
 
   const handleTags = (event) => {
-    if (!value.tags.includes(event.target.textContent)) {
-      setValue((prevState) => ({
-        ...prevState,
-        tags: [...prevState.tags, event.target.textContent],
-      }));
-    }
+    let tags = value.tags;
+    const selected = event.target.textContent;
+
+    tags.includes(selected)
+      ? (tags = tags.filter((e) => e !== selected))
+      : tags.push(selected);
+
+    setValue((prevState) => ({
+      ...prevState,
+      tags,
+    }));
   };
 
   const handlePhoto = (event) => {
@@ -70,14 +78,14 @@ function NewAdvert() {
   }
 
   return (
-    <Layout title="Create advert!">
+    <Layout title="Do you want to create an advert?">
       <Fragment>
         <div className="createNew-container">
           <form onSubmit={handleSubmit}>
             <FormField
               type="text"
               name="name"
-              label="name"
+              label="Name: "
               className="newAdvert-field"
               value={value.name}
               onChange={handleChange}
@@ -85,16 +93,26 @@ function NewAdvert() {
             <FormField
               type="checkbox"
               name="sale"
-              label="sale"
+              label="On sale: "
               className="newAdvert-field"
               value={value.sale}
               onChange={handleChange}
             ></FormField>
             <SelectTags click={handleTags} />
+            {value.tags.length > 0 && (
+              <div className="selectedtags-container">
+                <p>Tags filter selected:</p>
+                {value.tags.map((e) => (
+                  <p key={e} className="selectedtag">
+                    {e}
+                  </p>
+                ))}
+              </div>
+            )}
             <FormField
               type="number"
               name="price"
-              label="price"
+              label="Price: "
               className="newAdvert-field"
               value={value.price}
               onChange={handleChange}
@@ -102,10 +120,14 @@ function NewAdvert() {
             <FormField
               type="file"
               name="photo"
-              label="photo"
+              label="Put a photo: "
               onChange={handlePhoto}
             />
-            <Button disabled={!validate} type="submit">
+            <Button
+              className="createpost-button"
+              disabled={!validate}
+              type="submit"
+            >
               Create advert!
             </Button>
           </form>

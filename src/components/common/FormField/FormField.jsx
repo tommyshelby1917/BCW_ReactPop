@@ -21,7 +21,7 @@ function FormField({ className, label, autofocus, ...props }) {
         className
       )}
     >
-      <label>
+      <label className="labelform">
         <span>{label}</span>
         <input
           className="formField-input"

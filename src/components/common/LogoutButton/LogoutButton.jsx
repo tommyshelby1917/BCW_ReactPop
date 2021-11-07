@@ -22,7 +22,9 @@ function LogoutButton() {
 
   return (
     <div className="logout-button-container">
-      <Button onClick={showDisplayConfirmation}>Logout</Button>
+      <Button className="logout-button" onClick={showDisplayConfirmation}>
+        Logout
+      </Button>
       {displayConfirmation && (
         <ConfirmAction
           message={message}

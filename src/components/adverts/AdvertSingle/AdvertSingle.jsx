@@ -64,45 +64,53 @@ function AdvertSingle() {
   };
 
   return (
-    <Layout title="Single Advert">
-      <div className="singleAdvert">
-        {advert && (
-          <Fragment>
-            <div className="advertTitleContainer">
-              <h2>{advert.name}</h2>
-            </div>
-            <div className="advertSaleContainer">
-              <h2>{advert.sale ? 'I want sell!' : 'I want buy'}</h2>
-            </div>
-            <div className="advertPriceContainer">
-              <h2>{advert.price}</h2>
-            </div>
-            <div className="advertTagsContainer">
-              <h2>
-                {advert.tags ? advert.tags.map((e) => <p>{e}</p>) : 'NO TAGS'}
-              </h2>
-            </div>
-            <div className="advertImageContainer">
-              <img
-                src={advert.photo ? `${backend}${advert.photo}` : noImage}
-                alt=""
-                width="300"
-              />
-            </div>
-            <div className="deleteButton-container">
-              <Button onClick={showDisplayConfirmation}>
-                Delete this post!
-              </Button>
-              {displayConfirmation && (
-                <ConfirmAction
-                  message={deleteMessage}
-                  action={deletePost}
-                  hide={hideConfirmationModal}
+    <Layout title="Advert">
+      <div className="singleAdvert-container">
+        <div className="singleAdvert">
+          {advert && (
+            <Fragment>
+              <div className="advertSaleContainer">
+                <h2>{advert.sale ? 'I want sell!' : 'I want buy'}</h2>
+              </div>
+              <div className="advertTitleContainer">
+                <h2>{advert.name}</h2>
+              </div>
+              <div className="advertPriceContainer">
+                <h2>{advert.price}€</h2>
+              </div>
+              <div className="advertTagsContainer">
+                {advert.tags ? (
+                  advert.tags.map((e) => (
+                    <p className="tag" key={e}>
+                      {e}
+                    </p>
+                  ))
+                ) : (
+                  <p>'NO TAGS'</p>
+                )}
+              </div>
+              <div className="advertImageContainer">
+                <img
+                  src={advert.photo ? `${backend}${advert.photo}` : noImage}
+                  alt=""
+                  width="200"
                 />
-              )}
-            </div>
-          </Fragment>
-        )}
+              </div>
+              <div className="deleteButton-container">
+                <Button onClick={showDisplayConfirmation}>
+                  Delete this post!
+                </Button>
+                {displayConfirmation && (
+                  <ConfirmAction
+                    message={deleteMessage}
+                    action={deletePost}
+                    hide={hideConfirmationModal}
+                  />
+                )}
+              </div>
+            </Fragment>
+          )}
+        </div>
       </div>
     </Layout>
   );

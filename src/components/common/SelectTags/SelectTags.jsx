@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { requestTagsToAPI } from '../service';
+import { requestTagsToAPI } from '../../adverts/service';
 import styled from 'styled-components';
+
+import Button from '../Button/Button';
+
+import './SelectTags.css';
 
 const GetTags = () => {
   const [data, setData] = useState([]);
@@ -28,9 +32,9 @@ function SelectTags({ click }) {
     <div>
       {/* <select name="tags" multiple> */}
       {collectedTags.map((e) => (
-        <button type="button" key={e.toString()} onClick={click}>
+        <Button key={e.toString()} onClick={click} type="button">
           {e}
-        </button>
+        </Button>
         // <option key={e.toString()} value={e} onClick={}>
         //   {e}
         // </option>

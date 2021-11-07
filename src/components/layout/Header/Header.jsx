@@ -7,16 +7,17 @@ import { Link, NavLink } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 import LogoutButton from '../../common/LogoutButton/LogoutButton';
+import Logo from '../../../public/images/logo.png';
 
 function Header() {
   const { isLogged, handleLogout } = useContext(AuthContext);
   return (
     <header className="header-container">
       <Link to="/">
-        <h1>Logo</h1>
+        <img src={Logo} alt="" width="100" />
       </Link>
       <div className="menu-container">
-        <Button as={Link} to="/adverts/new">
+        <Button className="newpost-button" as={Link} to="/adverts/new">
           New Post
         </Button>
       </div>
