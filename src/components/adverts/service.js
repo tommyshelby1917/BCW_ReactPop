@@ -5,6 +5,12 @@ export const getLastestAdverts = () => {
   return client.get(url);
 };
 
+export const getFilteredAdverts = (params) => {
+  const url = `/api/v1/adverts?${params}`;
+  console.log(url);
+  return client.get(url);
+};
+
 export const getSingleAdvert = (id) => {
   const url = `/api/v1/adverts/${id}?_expand=user`;
   return client.get(url);

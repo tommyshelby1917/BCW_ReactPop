@@ -2,8 +2,10 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getLastestAdverts } from '../service';
+
 import Button from '../../common/Button/Button';
 import Layout from '../../layout/Layout';
+import FilterAdvert from '../FilterAdvert/FilterAdvert';
 
 import './AdvertsPage.css';
 
@@ -29,7 +31,8 @@ function AdvertsPage() {
       <div className="advertsPage">
         {adverts.length ? (
           <div className="advertsList-main">
-            {adverts.map(({ id, ...advert }) => (
+            <FilterAdvert />
+            {/* {adverts.map(({ id, ...advert }) => (
               <div key={id} className="advertList-item">
                 <Link to={`/adverts/${id}`}>
                   <Fragment>
@@ -48,7 +51,7 @@ function AdvertsPage() {
                   </Fragment>
                 </Link>
               </div>
-            ))}
+            ))} */}
           </div>
         ) : (
           <EmptyList />
