@@ -6,12 +6,12 @@ import client, {
 import storage from '../../utils/storage';
 
 export const login = (data) => {
-  console.log(data.remember);
   const credentials = { email: data.email, password: data.password };
   return client.post('api/auth/login', credentials).then(({ accessToken }) => {
-    console.log(data.remember);
     setAuthorizationHeader(accessToken);
-    storage.set('auth', accessToken, data.remember);
+    if (data.remember) {
+      storage.set('auth', accessToken);
+    }
   });
 };
 

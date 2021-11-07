@@ -136,7 +136,9 @@ function FilterAdvert() {
             <div className="selectedtags-container">
               <p>Tags filter selected:</p>
               {value.tags.map((e) => (
-                <p className="selectedtag">{e}</p>
+                <p key={e} className="selectedtag">
+                  {e}
+                </p>
               ))}
             </div>
           )}

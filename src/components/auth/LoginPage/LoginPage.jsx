@@ -8,7 +8,7 @@ import { AuthContextConsumer } from '../context';
 
 import './LoginPage.css';
 
-function LoginPage({ onLogin, history, location }) {
+function LoginPage({ onLogin, history, location, isLogged }) {
   const [value, setValue] = useState({
     email: '',
     password: '',
@@ -32,7 +32,6 @@ function LoginPage({ onLogin, history, location }) {
     event.preventDefault();
     deleteError();
     try {
-      console.log(value);
       await login(value);
       onLogin();
       const { from } = location.state || { from: { pathname: '/' } };
@@ -44,42 +43,44 @@ function LoginPage({ onLogin, history, location }) {
 
   return (
     <div className="loginPage">
-      <h1 className="loginPage-title">Log in to ReactPop!</h1>
-      <form className="loginForm" onSubmit={handleSubmit}>
-        <FormField
-          type="text"
-          name="email"
-          label="email"
-          className="loginForm-field"
-          value={value.email}
-          onChange={handleChange}
-          autofocus
-        ></FormField>
-        <FormField
-          type="password"
-          name="password"
-          label="password"
-          className="loginForm-field"
-          value={value.password}
-          onChange={handleChange}
-        ></FormField>
-        <FormField
-          type="checkbox"
-          name="remember"
-          label="Remember me"
-          className="loginForm-field"
-          value={value.remember}
-          onChange={handleChange}
-        ></FormField>
-        <Button className="loginForm-submit" type="submit">
-          Log in!
-        </Button>
-      </form>
-      {error && (
-        <div onClick={deleteError} className="loginPage-error">
-          {error.message}
-        </div>
-      )}
+      <div className="loginpage-main-container">
+        <h1 className="loginPage-title">Log in to ReactPop!</h1>
+        <form className="loginForm" onSubmit={handleSubmit}>
+          <FormField
+            type="email"
+            name="email"
+            label="Email: "
+            className="loginForm-field"
+            value={value.email}
+            onChange={handleChange}
+            autofocus
+          ></FormField>
+          <FormField
+            type="password"
+            name="password"
+            label="Password: "
+            className="loginForm-field"
+            value={value.password}
+            onChange={handleChange}
+          ></FormField>
+          <FormField
+            type="checkbox"
+            name="remember"
+            label="Remember me"
+            className="loginForm-field"
+            value={value.remember}
+            onChange={handleChange}
+          ></FormField>
+          <Button className="loginForm-submit" type="submit">
+            Log in!!
+          </Button>
+        </form>
+        {error && (
+          <div onClick={deleteError} className="loginPage-error">
+            {error.message}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

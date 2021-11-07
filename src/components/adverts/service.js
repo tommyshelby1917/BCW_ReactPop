@@ -7,7 +7,6 @@ export const getLastestAdverts = () => {
 
 export const getFilteredAdverts = (params) => {
   const url = `/api/v1/adverts?${params}`;
-  console.log(url);
   return client.get(url);
 };
 
